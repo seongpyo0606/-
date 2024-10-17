@@ -112,6 +112,11 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             return true;
         }
 
+        // 내가 추가한 코드
+        if (path.startsWith("/api/campers")) {
+            return true;
+        }
+
         return false;
     }
 }

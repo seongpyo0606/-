@@ -20,6 +20,12 @@ public class CamperBoardDTO {
     private Long cBoardID;
     private Member member; //회원번호 fk
 
+    //작성자를 list에 표현하기 위한 메소드?
+    @JsonProperty("membername")
+    public String getMemberName() {
+        return member != null ? member.getMemberName() : null; // member가 null이 아닐 경우 memberName 반환
+    }
+
     // 수정가능한 내용
     private String cBoardCategory; //캠퍼 게시글 말머리
     private String cBoardTitle;    //캠퍼 게시판 글 제목

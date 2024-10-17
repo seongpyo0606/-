@@ -54,7 +54,7 @@ public class CamperController {
     }
 
     // 등록
-    @PreAuthorize("hasRole('ROLE_USER')")
+//    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/")
     public Map<String, Long> register(CamperBoardDTO camperBoardDTO) {
         log.info("register............." + camperBoardDTO);
@@ -80,3 +80,4 @@ public class CamperController {
         return fileUtil.getFile(fileName);
     }
 }
+

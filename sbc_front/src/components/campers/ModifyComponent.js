@@ -23,7 +23,6 @@ const ModifyComponent = ({ cBoardId }) => {
     useEffect(() => {
         getOne(cBoardId).then((data) => {
             if (data) {
-                // 여기서 반환된 데이터의 구조에 맞게 상태를 설정
                 setTodo({
                     ...initState,
                     cboardId: data.cboardId, // cboardId 추가
@@ -33,6 +32,7 @@ const ModifyComponent = ({ cBoardId }) => {
                     cboardContent: data.cboardContent,
                     cboardDate: data.cboardDate,
                     cboardViews: data.cboardViews,
+                    file: null,
                     cboardAttachment: data.cboardAttachment || null, // 단일 첨부파일
                 });
                 console.log(data);
@@ -44,25 +44,26 @@ const ModifyComponent = ({ cBoardId }) => {
 
     const handleClickModify = async () => {
         try {
-            // cboardDate의 형식을 yyyy-MM-dd로 변환
             const formattedDate = new Date(todo.cboardDate).toISOString().split('T')[0];
 
-            // 요청할 데이터 객체 생성
-            const camperObj = {
-                cboardCategory: todo.cboardCategory,
-                cboardTitle: todo.cboardTitle,
-                cboardContent: todo.cboardContent,
-                cboardViews: todo.cboardViews,
-                cboardDate: formattedDate, // 날짜 형식 맞추기
-                cboardAttachment: todo.cboardAttachment, // 첨부파일 처리
-            };
-            console.log('camperObj:', camperObj);
+            // FormData 객체 생성
+            const formData = new FormData();
+            formData.append('cboardCategory', todo.cboardCategory);
+            formData.append('cboardTitle', todo.cboardTitle);
+            formData.append('cboardContent', todo.cboardContent);
+            formData.append('cboardViews', String(todo.cboardViews)); // 숫자를 문자열로 변환
+            formData.append('cboardDate', formattedDate);
+            if (todo.cboardAttachment) {
+                formData.append('cboardAttachment', todo.cboardAttachment); // 파일이 있는 경우에만 추가
+            }
 
-            // API 요청
-            const response = await putOne(cBoardId, camperObj);
+            console.log('formData:', formData);
+
+            // putOne 함수 호출 시 FormData 전달
+            const response = await putOne(cBoardId, formData);
             console.log('수정 성공:', response);
+            navigate("/campers/list"); // 수정 성공 후 리스트 페이지로 이동
         } catch (error) {
-            // 오류 처리 개선
             if (error.response) {
                 console.error('수정 중 오류 발생:', error.response.data);
                 setError(`수정 중 오류가 발생했습니다: ${error.response.data.message}`);
@@ -73,8 +74,10 @@ const ModifyComponent = ({ cBoardId }) => {
         }
     };
 
+
     const handleClickCancel = () => {
-        navigate(`/campers/read/${cBoardId}`);
+        // 내용 저장 없이 리스트 페이지로 이동
+        navigate("/campers/list");
     };
 
     const handleChangeTodo = (e) => {
@@ -175,14 +178,14 @@ const ModifyComponent = ({ cBoardId }) => {
                     className="btn btn-secondary mx-2"
                     onClick={handleClickCancel}
                 >
-                    Cancel
+                    취소
                 </button>
                 <button
                     type="button"
                     className="btn btn-primary mx-2"
                     onClick={handleClickModify}
                 >
-                    Modify
+                    수정
                 </button>
             </div>
         </div>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getOne, deleteOne, getMemberById, prefix } from "../../api/camperApi";  // API 함수 가져오기
+import { getOne, deleteOne, getMemberById, prefix } from "../../api/camperApi"; // API 함수 가져오기
 import useCustomMove from "../../hooks/useCustomMove";
+import CommentComponent from "./CommentComponent"; // CommentComponent 추가
 
 const initState = {
     member: {
-        memberName: '',  // 작성자 이름
+        memberName: '', // 작성자 이름
         memberId: ''
     },
     cboardCategory: '',
@@ -12,14 +13,14 @@ const initState = {
     cboardContent: '',
     cboardDate: '',
     cboardViews: 0,
-    cboardAttachment: '',  //
+    cboardAttachment: '',
     cboardId: null,
 };
 
 const ReadComponent = ({ cBoardId }) => {
-    const [camper, setCamper] = useState(initState);  // 게시글 데이터 상태
-    const [loading, setLoading] = useState(true);  // 로딩 상태
-    const { moveToList, moveToModify } = useCustomMove();  // 페이지 이동 훅
+    const [camper, setCamper] = useState(initState); // 게시글 데이터 상태
+    const [loading, setLoading] = useState(true); // 로딩 상태
+    const { moveToList, moveToModify } = useCustomMove(); // 페이지 이동 훅
 
     // 게시글 데이터 로딩
     useEffect(() => {
@@ -27,7 +28,7 @@ const ReadComponent = ({ cBoardId }) => {
             try {
                 const data = await getOne(cBoardId);
                 if (data) {
-                    setCamper(data);  // 게시글 데이터 상태 업데이트
+                    setCamper(data); // 게시글 데이터 상태 업데이트
 
                     // 작성자 정보를 가져오기 위해 memberId를 사용
                     if (data.memberId) {
@@ -54,9 +55,9 @@ const ReadComponent = ({ cBoardId }) => {
     const handleDelete = async () => {
         if (window.confirm("정말로 삭제하시겠습니까?")) {
             try {
-                await deleteOne(cBoardId);  // API 호출로 게시글 삭제
+                await deleteOne(cBoardId); // API 호출로 게시글 삭제
                 alert("게시글이 삭제되었습니다.");
-                moveToList();  // 삭제 후 목록으로 이동
+                moveToList(); // 삭제 후 목록으로 이동
             } catch (error) {
                 console.error("삭제 중 오류 발생:", error);
             }
@@ -71,7 +72,7 @@ const ReadComponent = ({ cBoardId }) => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;  // 로딩 상태 표시
+        return <div>Loading...</div>; // 로딩 상태 표시
     }
 
     return (
@@ -133,6 +134,12 @@ const ReadComponent = ({ cBoardId }) => {
                         readOnly
                         rows="6"
                     />
+                </div>
+
+                {/* 댓글 컴포넌트 */}
+                <div className="mb-4">
+                    <h5>댓글</h5>
+                    <CommentComponent cBoardId={cBoardId} /> {/* 댓글 컴포넌트 추가 */}
                 </div>
 
                 {/* 버튼 */}
