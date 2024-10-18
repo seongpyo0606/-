@@ -61,9 +61,6 @@ const MypageAuthPwPage = () => {
 
     return(
         <div>
-            <div>
-                <h3>회원 인증</h3>
-            </div>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                 <Form.Group as={Row} className="mb-3" >
                     <Form.Label column sm={2}>

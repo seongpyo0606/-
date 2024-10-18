@@ -25,7 +25,7 @@ export const cancelRes = async (resId) => {
     return res.data;
 }
 
-// 회원정보 수정 1 - 비밀번호 인증
+// 회원정보 수정 - 비밀번호 인증
 export const authPw = async (member) => {
     console.log('back 보내기 전 member : ',member)
     const header = {
@@ -35,5 +35,3 @@ export const authPw = async (member) => {
     console.log('mypageApi - authPw 결과 : ', res);
     return res.data;
 }
-
-// 회원정보 수정 2 - 회원 정보 수정

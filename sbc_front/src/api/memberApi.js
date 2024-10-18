@@ -46,7 +46,7 @@ export const findEmail = async (member) => {
     return res.data;
 }
 
-// 비밀번호 찾기 1 - 이름 + 이메일로 회원 조회
+// 이름 + 이메일로 회원 조회
 export const findpwMember = async (member) => {
     const header = {
         headers:{'Content-Type': 'application/json'}
@@ -56,13 +56,12 @@ export const findpwMember = async (member) => {
     return res.data;
 }
 
-// 비밀번호 찾기 2 - 비밀번호 변경
-export const modifyPw = async (member) => {
-    console.log('값 확인 : ', member)
-    // const header = {
-    //     headers:{'Content-Type': 'application/json'}
-    // }
-    const res = await axios.post(`${host}/auth/modpw`, member);
+// 비밀번호 찾기 - 비밀번호 변경
+export const modifyPw = async (memberDTO) => {
+    const header = {
+        headers:{'Content-Type': 'application/json'}
+    }
+    const res = await axios.post(`${host}/auth/modifypw`, JSON.stringify(memberDTO), header);
     console.log(res); // "msg" : "success" 또는 "fail
     return res.data;
 }

@@ -43,7 +43,6 @@ public class CustomSecurityConfig {
             form.failureHandler(new APILoginFailHandler());
         });
 
-
         // JWT 체크
         http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
@@ -67,7 +66,6 @@ public class CustomSecurityConfig {
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
         source.registerCorsConfiguration("/**", configuration);
 
         return source;

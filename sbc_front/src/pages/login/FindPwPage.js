@@ -18,6 +18,8 @@ const FindPwPage = () => {
 
     // '비밀번호 변경' 버튼 동작
     const handleSubmit = (e) => {
+        console.log('동작 확인')
+
         if(!member.memberName){
             alert('이름을 입력해주세요')
             e.preventDefault()
@@ -35,17 +37,15 @@ const FindPwPage = () => {
     const handleFindMemberByNameAndEmail = async (member) => {
         try {
             const action = await findpwMember(member)
-            //console.log('findpwMember 완료 :', action);
-            if(!action){
+            console.log(action.result);
+            if(action.result === "not_exist"){
                 alert('회원을 찾을 수 없습니다. 이름 또는 이메일을 다시 확인해주세요.')
-            } else if(action){
-                const member = JSON.stringify(action)
-                //console.log('member :' , member);
-                navigate(`/findpw/mod?member=${member}`)
+            } else if(action.result === "exist"){
+                setMembers({memberId : action.memberId })
+                navigate('/findpw/mod')
             }
         }catch (err){
             console.log('요청 오류')
-            alert('회원을 찾을 수 없습니다. 이름 또는 이메일을 다시 확인해주세요.')
         }
 
     }

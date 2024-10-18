@@ -67,9 +67,11 @@ public class MemberController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/pwauth")
     public Map<String, String> memberPwAuth(@RequestBody Map<String, Object> member){
-        Long memberId = Long.parseLong(member.get("memberId").toString());
+        Long memberId = Long.parseLong(member.get("memberId").toString());  // 키 값은 문자열로 사용
         String memberPw = member.get("memberPw").toString();
-        log.info("------비밀번호 인증 메소드 : " + memberId, memberPw);
+        log.info("비밀번호 인증 : " + memberId, memberPw);
+        Member mem = new Member();
+
         String msg = memberService.authPw(memberId, memberPw);
         Map<String, String> map = new HashMap<>();
         map.put("msg", msg);

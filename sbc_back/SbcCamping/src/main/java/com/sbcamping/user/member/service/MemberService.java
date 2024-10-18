@@ -14,7 +14,7 @@ public interface MemberService {
     public String emailCheck(String memberEmail);
     public String findEmail(String memberName, String memberPhone);
     public Member findMemberByNameAndEmail(Member member);
-    public String updatePw(Member member);
+    public String updatePw(MemberDTO memberDTO);
     public String authPw(Long memberId, String memberPw);
     public List<Reservation> getMemberRes(Long memberId);
     public Reservation getResDetail(Long resId);

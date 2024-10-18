@@ -20,7 +20,7 @@ public class JWTUtil {
         SecretKey key = null;
         try {
             key = Keys.hmacShaKeyFor(JWTUtil.key.getBytes("UTF-8"));
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
 
@@ -30,6 +30,8 @@ public class JWTUtil {
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(min).toInstant()))
                 .signWith(key).compact();
+
+        log.info("jwtStr : {}", jwtStr);
 
         return jwtStr;
     }
@@ -45,14 +47,14 @@ public class JWTUtil {
                     .setSigningKey(key).build()
                     .parseClaimsJws(token)
                     .getBody(); // 토큰에 포함된 클레임 추출
-            log.info("--------validateToken claim : {}", claim);
+            //log.info("validateToken claim : {}", claim);
         } catch (MalformedJwtException e) { // 전달되는 토큰의 값이 유효하지 않을 때 발생
             throw new CustomJWTException("MalFormed");
         } catch (ExpiredJwtException e) { // 유효기간 초과
             throw new CustomJWTException("Expired");
         } catch (InvalidClaimException e) { // 클레임이 유효하지 않음
             throw new CustomJWTException("Invalid");
-        } catch (JwtException e){
+        } catch (JwtException e) {
             throw new CustomJWTException("JWT 사용자 정의 예외");
         } catch (Exception e) {
             throw new CustomJWTException("JWT ERROR");

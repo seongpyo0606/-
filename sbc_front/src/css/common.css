@@ -4,15 +4,24 @@
     font-family: "Noto Sans KR";
 }
 
+#logo{
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+#logo span{
+    font-weight: 800;
+    color: darkcyan;
+}
+
 
 #mainwrap{
     min-height: 900px;
 }
 
 /* footer */
-.terms:hover{
-    cursor: pointer;
-}
+
 #footerwrap{
     background: grey;
     color: white;

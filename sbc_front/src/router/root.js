@@ -26,11 +26,10 @@ const Main = lazy(() => import("../pages/MainPage"))
 const Campingindex = lazy(() => import("../pages/campinginfo/CampingIndexPage"))
 const ResIndex = lazy(() => import("../pages/reservation/ResIndexPage"))
 const NoticeIndex = lazy(() => import("../pages/community/NoticeIndexPage"))
-const Login = lazy(() => import("../pages/login/LoginPage"))
-const Join = lazy(() => import("../pages/login/JoinIndexPage"))
-const FindPw = lazy(() => import("../pages/login/FindPwPage"))
-const FindPwMod = lazy(() => import("../pages/login/FindPwModifyPage"))
-const FIndEmail = lazy(() => import("../pages/login/FindEmailPage"))
+const Login = lazy(() => import("../pages/common/LoginPage"))
+const Join = lazy(() => import("../pages/member/JoinIndexPage"))
+const FindPw = lazy(() => import("../pages/member/FindPwPage"))
+const FIndEmail = lazy(() => import("../pages/member/FindEmailPage"))
 const MyPageIndex = lazy(() => import("../pages/member/MypageIndexPage"))
 const CamperIndex = lazy(() =>  import("../pages/campers/CamperIndexPage"))
 
@@ -75,10 +74,6 @@ const root = createBrowserRouter([
     {
         path: "findpw",
         element: <Suspense fallback={Loading}><FindPw/></Suspense>
-    },
-    {
-        path: "findpw/mod",
-        element: <Suspense fallback={Loading}><FindPwMod/></Suspense>
     },
     {
         path: "findemail",

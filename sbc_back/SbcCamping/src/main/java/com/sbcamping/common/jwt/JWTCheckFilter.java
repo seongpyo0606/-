@@ -29,6 +29,9 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         String authHeaderStr = request.getHeader("Authorization");
         try {
             String accessToken = authHeaderStr.substring(7);
+
+            log.info("accessToken : {}", accessToken);
+
             Map<String, Object> claims = JWTUtil.validateToken(accessToken); // 토큰 검증
             log.info("--------JWT Claims : {}", claims);
 
@@ -59,7 +62,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
             // 사용자의 인증 상태 저장 (인증 완료)
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             filterChain.doFilter(request, response);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.info("------------------JWT 체크 오류 : {}", e.getMessage());
             Gson gson = new Gson();
             String msg = gson.toJson(Map.of("error", "ERROR_ACCESS_TOKEN"));
@@ -75,45 +78,37 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         // preflight 요청은 체크하지 않음
         // preflight란 CORS상황에서 보안을 확인하기 위해 브라우저가 제공하는 기능
-        if(request.getMethod().equals("OPTIONS")){
+        if (request.getMethod().equals("OPTIONS")) {
             return true;
         }
 
         String path = request.getRequestURI();
-        log.info("URL CHECK : {}", path);
+        //log.info("URL CHECK : {}", path);
 
         // api/auth/ 경로의 호출은 체크하지 않음 (로그인할 때는 JWT 토큰이 없는 상태이기에 하는 설정)
-        if(path.startsWith("/api/auth")){
+        if (path.startsWith("/api/auth/")) {
             return true;
         }
 
         // 회원가입 경로 예외
-        if(path.equals("/api/member/")){
+        if (path.equals("/api/member/")) {
             return true;
         }
 
-        if(path.equals("/api/campers/list") || path.startsWith("/api/campers/")){
-            return true;
-        }
-
-        if (path.startsWith("/api/res/")) {
-            return true;
-        }
-
-        if(path.startsWith("/admin")){
-            return true;
-        }
-
-        if (path.startsWith("/api/res/")) {
-            return true;
-        }
-
-        if(path.equals("/api/res/siteList")){
-            return true;
-        }
-
-        // 내가 추가한 코드
         if (path.startsWith("/api/campers")) {
+            return true;
+        }
+
+        if (path.startsWith("/api/res/")) {
+            return true;
+        }
+
+        if (path.startsWith("/admin")) {
+            return true;
+        }
+
+
+        if (path.equals("/api/res/siteList")) {
             return true;
         }
 

@@ -2,9 +2,9 @@ import {lazy, Suspense} from "react";
 import { Navigate } from "react-router-dom";
 
 const Loading = <div>Loading . . .</div>
-const Agreed = lazy(() => import("../pages/login/JoinAgreePage"));
-const Input = lazy(() => import("../pages/login/JoinInputPage"));
-const Welcome = lazy(() => import("../pages/login/JoinCompletePage"));
+const Agreed = lazy(() => import("../pages/member/JoinAgreePage"));
+const Input = lazy(() => import("../pages/member/JoinInputPage"));
+const Welcome = lazy(() => import("../pages/member/JoinCompletePage"));
 
 const JoinRouter = () => {
     return[

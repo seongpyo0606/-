@@ -40,16 +40,16 @@
 }
 
 .menubutton:hover{
-    background-color: #9DC4B5;
+    background-color: #f68b1e;
     color: white;
 }
 
 .menubutton:focus{
-    background-color: #9DC4B5;
+    background-color: #f68b1e;
     color: white;
 }
 
 .menubutton.active {
-    background-color: #9DC4B5;
+    background-color: #f68b1e;
     color: white;
 }
